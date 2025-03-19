@@ -1,0 +1,26 @@
+{
+  "name": "file-base-crud-api",
+  "version": "1.0.0",
+  "description": "CRUD",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "nodemon",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krupa625/file-base-crud-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/krupa625/file-base-crud-api/issues"
+  },
+  "homepage": "https://github.com/krupa625/file-base-crud-api#readme",
+  "dependencies": {
+    "nodemon": "^3.1.9",
+    "uuid": "^11.1.0"
+  }
+}

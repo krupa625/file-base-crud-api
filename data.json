@@ -1,0 +1,29 @@
+[
+  {
+    "sName": "Item 1",
+    "nQuantity": 400,
+    "Price": 300,
+    "status": "available",
+    "id": "468bfe49-ebdc-4a2f-92ac-116e6ac66f22",
+    "createdAt": "2025-03-19T16:55:59.360Z",
+    "updatedAt": "2025-03-19T16:55:59.360Z"
+  },
+  {
+    "sName": "Item 2",
+    "nQuantity": 500,
+    "Price": 600,
+    "status": "available",
+    "id": "dd16488f-9e97-4592-b570-c30c61912d0e",
+    "createdAt": "2025-03-19T16:56:17.013Z",
+    "updatedAt": "2025-03-19T16:56:17.013Z"
+  },
+  {
+    "sName": "Item 3",
+    "nQuantity": 800,
+    "Price": 900,
+    "status": "available",
+    "id": "d4a56a31-8869-4d99-90bf-aa0a463e6159",
+    "createdAt": "2025-03-19T16:56:28.358Z",
+    "updatedAt": "2025-03-19T16:56:28.358Z"
+  }
+]

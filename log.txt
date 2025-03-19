@@ -1,0 +1,7 @@
+2025-03-19T16:44:04.907Z - Item Created: {"id":"eacd59c8-4fa0-4cdf-8981-da850368432b","name":"krupa","createdAt":"2025-03-19T16:44:04.906Z","updatedAt":"2025-03-19T16:44:04.906Z"}
+2025-03-19T16:46:50.122Z - Item Created: {"id":"a61070ec-bda5-486d-95fe-06d0a469893d","name":"divya","createdAt":"2025-03-19T16:46:50.118Z","updatedAt":"2025-03-19T16:46:50.118Z"}
+2025-03-19T16:47:26.847Z - Item Created: [{"id":1,"name":"riya"},{"id":2,"name":"nimisha"}]
+2025-03-19T16:55:33.729Z - Item Created: {"sName":"Updated Item","nQuantity":50,"Price":200,"status":"available","id":"2cdea93c-c857-4a9e-aa52-301b42f31757","createdAt":"2025-03-19T16:55:33.722Z","updatedAt":"2025-03-19T16:55:33.722Z"}
+2025-03-19T16:55:59.366Z - Item Created: {"sName":"Item 1","nQuantity":400,"Price":300,"status":"available","id":"468bfe49-ebdc-4a2f-92ac-116e6ac66f22","createdAt":"2025-03-19T16:55:59.360Z","updatedAt":"2025-03-19T16:55:59.360Z"}
+2025-03-19T16:56:17.018Z - Item Created: {"sName":"Item 2","nQuantity":500,"Price":600,"status":"available","id":"dd16488f-9e97-4592-b570-c30c61912d0e","createdAt":"2025-03-19T16:56:17.013Z","updatedAt":"2025-03-19T16:56:17.013Z"}
+2025-03-19T16:56:28.364Z - Item Created: {"sName":"Item 3","nQuantity":800,"Price":900,"status":"available","id":"d4a56a31-8869-4d99-90bf-aa0a463e6159","createdAt":"2025-03-19T16:56:28.358Z","updatedAt":"2025-03-19T16:56:28.358Z"}
