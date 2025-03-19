@@ -4,10 +4,10 @@ const path = require("path");
 
 class Logger extends EventEmitter {
   log(message) {
-    const logMessage = `${new Date().toString()} - ${message}`;
+    const logMessage = `${new Date().toString()} - ${message}`; //log msg added into log.txt file
     console.log(logMessage);
 
-    fs.appendFileSync(path.join(__dirname, "log.txt"), logMessage, "utf8");
+    fs.appendFileSync(path.join(__dirname, "log.txt"), logMessage); //create log.txt file
   }
 }
 

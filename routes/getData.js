@@ -8,7 +8,7 @@ function getData(req, res) {
       return;
     }
     res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(data);
+    res.end(data); //get data from data.json
   });
 }
 

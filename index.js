@@ -12,7 +12,7 @@ const server = http.createServer((req, res) => {
   console.log("URL:", req.url);
 
   if (req.method === "GET" && req.url === "/") {
-    // Serve index.html for root requests
+    // serve index.html file here
     fs.readFile(path.join(__dirname, "public", "index.html"), (err, data) => {
       if (err) {
         res.writeHead(404, { "Content-Type": "text/plain" });
@@ -24,6 +24,28 @@ const server = http.createServer((req, res) => {
     });
   } else if (req.method === "GET" && req.url === "/api/data") {
     getData(req, res);
+  } else if (req.method === "GET" && req.url.startsWith("/api/data/")) {
+    // Extract ID
+    const id = req.url.split("/")[3]; //  /api/data/2cdea93c -> Extract "2cdea93c"
+
+    fs.readFile("data.json", "utf8", (err, data) => {
+      //read data.json file
+      if (err) {
+        res.writeHead(500, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ message: "Server Error" }));
+      } else {
+        const jsonData = JSON.parse(data);
+        const item = jsonData.find((obj) => obj.id === id); // Find item by ID
+
+        if (item) {
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify(item));
+        } else {
+          res.writeHead(404, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ message: "Item not found" }));
+        }
+      }
+    });
   } else if (req.method === "POST" && req.url === "/api/data") {
     postData(req, res);
   } else if (req.method === "PUT" && req.url.startsWith("/api/data/")) {
