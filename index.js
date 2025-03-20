@@ -25,11 +25,9 @@ const server = http.createServer((req, res) => {
   } else if (req.method === "GET" && req.url === "/api/data") {
     getData(req, res);
   } else if (req.method === "GET" && req.url.startsWith("/api/data/")) {
-    // Extract ID
     const id = req.url.split("/")[3]; //  /api/data/2cdea93c -> Extract "2cdea93c"
 
     fs.readFile("data.json", "utf8", (err, data) => {
-      //read data.json file
       if (err) {
         res.writeHead(500, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ message: "Server Error" }));
