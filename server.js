@@ -12,7 +12,7 @@ const server = http.createServer((req, res) => {
   console.log("URL:", req.url);
 
   if (req.method === "GET" && req.url === "/") {
-    //static serve file index.html
+    //serving static file here
     try {
       fs.readFile(path.join(__dirname, "public", "index.html"), (err, data) => {
         if (err) {
