@@ -9,16 +9,37 @@ const putData = (req, res) => {
     body += chunk.toString();
   });
   const validateData = (data) => {
+    //validate data which is enter in post request
+    let aKeys = Object.keys(data);
+    let bool = false;
+    aKeys.forEach((key) => {
+      if (key !== "sName" && key !== "nQuantity" && key !== "nPrice") {
+        bool = true;
+      }
+    });
+    // console.log(aKeys);
+
+    if (bool) {
+      return "Enter valid keys";
+    }
     const { sName, nQuantity, nPrice } = data;
-    if (sName !== "string") {
+    // console.log(typeof sName);
+    // console.log(typeof nPrice);
+    // console.log(typeof nQuantity);
+
+    if (typeof sName !== "string") {
       return "name should be a string";
     }
-    if (nQuantity !== Number || nQuantity <= 0) {
+    if (typeof nQuantity !== "number" || nQuantity <= 0) {
       return "quantity should be a number";
     }
-    if (nPrice !== Number || nPrice <= 0) {
+    if (typeof nPrice !== "number" || nPrice <= 0) {
       return "price should be a number";
     }
+    // if ((obj !== sName, nPrice, nQuantity)) {
+    //   return "enter valid keys";
+    // }
+
     return null;
   };
 
@@ -31,32 +52,37 @@ const putData = (req, res) => {
           return;
         }
 
-        let jsonData = JSON.parse(data); //convert json data into array or object
-        let itemIndex = jsonData.findIndex((item) => item.id === id); //find the iteam of given id checking
+        let aJsonData = JSON.parse(data); //convert json data into array or object
+        // console.log(aJsonData);
 
-        if (itemIndex === -1) {
+        let aItemIndex = aJsonData.findIndex((item) => item.id === id); //find the iteam of given id checking
+        // console.log(aItemIndex);
+
+        if (aItemIndex === -1) {
           res.writeHead(404, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ message: "Item not found" }));
           return;
         }
 
-        let updatedItem = {
-          ...jsonData[itemIndex],
+        let oUpdatedItem = {
+          ...aJsonData[aItemIndex],
           ...JSON.parse(body),
           updatedAt: new Date(),
         };
-        jsonData[itemIndex] = updatedItem;
+        aJsonData[aItemIndex] = oUpdatedItem;
+        console.log(oUpdatedItem);
 
         //copies of all jsondata with index and add into updated form
 
-        const error = validateData(updatedItem);
+        const error = validateData(JSON.parse(body));
+
         if (error) {
           res.writeHead(400, { "content-type": "Application/json" });
           res.end(JSON.stringify({ message: error }));
           return;
         }
 
-        fs.writeFile("./data.json", JSON.stringify(jsonData), (err) => {
+        fs.writeFile("./data.json", JSON.stringify(aJsonData), (err) => {
           if (err) {
             res.writeHead(500, { "Content-Type": "application/json" });
             res.end(JSON.stringify({ message: "Error updating data" }));
@@ -67,10 +93,11 @@ const putData = (req, res) => {
           res.end(
             JSON.stringify({
               message: "Data updated successfully",
-              updatedItem,
+              oUpdatedItem,
             })
           );
         });
+        logger.log(`Item Updated: ${JSON.stringify(oUpdatedItem)}`);
       });
     } catch (err) {
       res.end(err, { message: "Something went wrong!" });

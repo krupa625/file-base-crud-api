@@ -1,5 +1,6 @@
 const fs = require("fs");
 const url = require("url");
+const logger = require("../eventLogger");
 
 const deleteData = (req, res) => {
   const id = req.url.split("/")[3];
@@ -12,17 +13,20 @@ const deleteData = (req, res) => {
         return;
       }
 
-      let jsonData = JSON.parse(data); //convert json into stringdata
-      let filteredData = jsonData.filter((item) => item.id !== id); //remove id from old iteams
+      let aJsonData = JSON.parse(data);
+      // console.log(aJsonData);
 
-      if (jsonData.length === filteredData.length) {
+      let aFilteredData = aJsonData.filter((item) => item.id !== id); //remove id from old iteams
+      // console.log(aFilteredData);
+
+      if (aJsonData.length === aFilteredData.length) {
         //if iteam removed than main iteam length small if not then error
         res.writeHead(404, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ message: "Item not found" }));
         return;
       }
 
-      fs.writeFile("./data.json", JSON.stringify(filteredData), (err) => {
+      fs.writeFile("./data.json", JSON.stringify(aFilteredData), (err) => {
         if (err) {
           res.writeHead(500, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ message: "Error deleting data" }));
@@ -32,6 +36,7 @@ const deleteData = (req, res) => {
         res.writeHead(200, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ message: "Data deleted successfully" }));
       });
+      logger.log(`Item Deleted: ${JSON.stringify(aJsonData)}`);
     });
   } catch (err) {
     res.end(err, { message: "Something went wrong!" });
