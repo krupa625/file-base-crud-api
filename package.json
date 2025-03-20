@@ -2,7 +2,7 @@
   "name": "file-base-crud-api",
   "version": "1.0.0",
   "description": "CRUD",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "npm run dev",
     "dev": "nodemon",
