@@ -9,12 +9,15 @@ function getDataId(req, res) {
         res.writeHead(500, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ message: "Server Error" }));
       } else {
-        const jsonData = JSON.parse(data);
-        const item = jsonData.find((obj) => obj.id === id); // Find item by ID
+        const aJsonData = JSON.parse(data);
+        // console.log(aJsonData);
 
-        if (item) {
+        const oItem = aJsonData.find((obj) => obj.id === id); // Find item by ID
+        // console.log(oItem);
+
+        if (oItem) {
           res.writeHead(200, { "Content-Type": "application/json" });
-          res.end(JSON.stringify(item));
+          res.end(JSON.stringify(oItem));
         } else {
           res.writeHead(404, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ message: "Item not found" }));
