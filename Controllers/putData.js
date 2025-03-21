@@ -46,7 +46,7 @@ const putData = (req, res) => {
 
   req.on("end", () => {
     try {
-      fs.readFile("./data.json", "utf8", (err, data) => {
+      fs.readFile("data.json", "utf8", (err, data) => {
         if (err) {
           res.writeHead(500, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ message: "Error reading data" }));
@@ -70,10 +70,8 @@ const putData = (req, res) => {
           ...JSON.parse(body), //spread new data
           updatedAt: new Date(),
         };
-        aJsonData[aItemIndex] = oUpdatedItem; //update array
+        aJsonData[aItemIndex] = oUpdatedItem; //copies of all jsondata with index and add into updated form
         // console.log(oUpdatedItem);
-
-        //copies of all jsondata with index and add into updated form
 
         const error = validateData(JSON.parse(body));
 
@@ -83,7 +81,7 @@ const putData = (req, res) => {
           return;
         }
 
-        fs.writeFile("./data.json", JSON.stringify(aJsonData), (err) => {
+        fs.writeFile("data.json", JSON.stringify(aJsonData), (err) => {
           if (err) {
             res.writeHead(500, { "Content-Type": "application/json" });
             res.end(JSON.stringify({ message: "Error updating data" }));

@@ -1,5 +1,4 @@
 const fs = require("fs");
-const path = require("path");
 const { v4: uuidv4 } = require("uuid");
 const logger = require("../EventHandler/eventLogger");
 
@@ -44,7 +43,7 @@ const postData = (req, res) => {
 
   req.on("end", () => {
     const oNewItem = JSON.parse(body);
-    console.log(oNewItem);
+    // console.log(oNewItem);
 
     const error = validateData(oNewItem);
     if (error) {
@@ -53,32 +52,31 @@ const postData = (req, res) => {
       return;
     }
     oNewItem.id = uuidv4();
-    oNewItem.createdAt = new Date().toString();
+    oNewItem.createdAt = new Date().toLocaleString();
     oNewItem.updatedAt = oNewItem.createdAt; //assign currentdat and update that
     // console.log(oNewItem);
 
     try {
-      fs.readFile(path.join(__dirname, "../data.json"), "utf8", (err, data) => {
-        const aItems = err ? [] : JSON.parse(data); //store data into iteams
+      fs.readFile("data.json", "utf8", (err, data) => {
+        if (err) {
+          res.writeHead(404, { "Content-Type": "application/json" });
+          res.end(err, { message: "Error reading file" });
+        }
+        const aItems = JSON.parse(data);
         aItems.push(oNewItem);
-        // console.log(aItems);
 
-        fs.writeFile(
-          path.join(__dirname, "../data.json"),
-          JSON.stringify(aItems),
-          (writeErr) => {
-            if (writeErr) {
-              res.writeHead(500, { "Content-Type": "application/json" });
-              res.end(JSON.stringify({ message: "Error saving data" }));
-              return; //write the data into data.json
-            }
-
-            logger.log(`Item Created: ${JSON.stringify(oNewItem)}`); //log added into log.txt file
-
-            res.writeHead(201, { "Content-Type": "application/json" });
-            res.end(JSON.stringify(oNewItem));
+        fs.writeFile("data.json", JSON.stringify(aItems), (writeErr) => {
+          if (writeErr) {
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ message: "Error saving data" }));
+            return; //write the data into data.json
           }
-        );
+
+          logger.log(`Item Created: ${JSON.stringify(oNewItem)}`); //log added into log.txt file
+
+          res.writeHead(201, { "Content-Type": "application/json" });
+          res.end(JSON.stringify(oNewItem));
+        });
       });
     } catch (err) {
       res.end(err, { message: "Something went wrong!" });

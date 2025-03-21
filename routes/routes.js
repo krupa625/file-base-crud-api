@@ -11,10 +11,13 @@ const route = (req, res) => {
   console.log("Method:", req.method);
 
   if (req.method === "GET" && req.url === "/") {
-    // const filepath = path.join(__dirname, "public", "index.html");
     //serving static file here
+
+    const filePath = path.join(__dirname, "../public/index.html");
+    // console.log(filePath);
+
     try {
-      fs.readFile("index.html", (err, data) => {
+      fs.readFile(filePath, (err, data) => {
         if (err) {
           res.writeHead(404, { "Content-Type": "text/plain" });
           res.end("404 Not Found");

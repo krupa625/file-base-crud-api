@@ -2,7 +2,7 @@ const fs = require("fs");
 
 function getData(req, res) {
   try {
-    fs.readFile("./data.json", "utf8", (err, data) => {
+    fs.readFile("data.json", "utf8", (err, data) => {
       if (err) {
         res.writeHead(500, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ error: "Internal Server Error" }), err);

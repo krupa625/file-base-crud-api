@@ -6,7 +6,7 @@ const deleteData = (req, res) => {
   const id = req.url.split("/")[3];
 
   try {
-    fs.readFile("./data.json", "utf8", (err, data) => {
+    fs.readFile("data.json", "utf8", (err, data) => {
       if (err) {
         res.writeHead(500, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ message: "Error reading data" }));
@@ -26,7 +26,7 @@ const deleteData = (req, res) => {
         return;
       }
 
-      fs.writeFile("./data.json", JSON.stringify(aFilteredData), (err) => {
+      fs.writeFile("data.json", JSON.stringify(aFilteredData), (err) => {
         if (err) {
           res.writeHead(500, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ message: "Error deleting data" }));
