@@ -1,31 +1,28 @@
 const fs = require("fs");
 const path = require("path");
+const getData = require("../Controllers/getData");
+const postData = require("../Controllers/postData");
+const putData = require("../Controllers/putData");
+const deleteData = require("../Controllers/deleteData");
+const getDataId = require("../Controllers/getDataId");
 
 const route = (req, res) => {
   console.log("URL:", req.url);
   console.log("Method:", req.method);
 
-  const getData = require("../Controllers/getData");
-  const postData = require("../Controllers/postData");
-  const putData = require("../Controllers/putData");
-  const deleteData = require("../Controllers/deleteData");
-  const getDataId = require("../Controllers/getDataId");
-
   if (req.method === "GET" && req.url === "/") {
+    // const filepath = path.join(__dirname, "public", "index.html");
     //serving static file here
     try {
-      fs.readFile(
-        path.join(__filename, "public", "index.html"),
-        (err, data) => {
-          if (err) {
-            res.writeHead(404, { "Content-Type": "text/plain" });
-            res.end("404 Not Found");
-          } else {
-            res.writeHead(200, { "Content-Type": "text/html" });
-            res.end(data);
-          }
+      fs.readFile("index.html", (err, data) => {
+        if (err) {
+          res.writeHead(404, { "Content-Type": "text/plain" });
+          res.end("404 Not Found");
+        } else {
+          res.writeHead(200, { "Content-Type": "text/html" });
+          res.end(data);
         }
-      );
+      });
     } catch (err) {
       res.end(err, { message: "Something went wrong!" });
     }
