@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
-const logger = require("../eventLogger");
+const logger = require("../EventHandler/eventLogger");
 
 const postData = (req, res) => {
   let body = "";

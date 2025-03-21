@@ -187,5 +187,13 @@
     "id": "cf925ea1-1045-4beb-88c3-37b14b4b2655",
     "createdAt": "Thu Mar 20 2025 17:39:12 GMT+0530 (India Standard Time)",
     "updatedAt": "Thu Mar 20 2025 17:39:12 GMT+0530 (India Standard Time)"
+  },
+  {
+    "sName": "helli",
+    "nQuantity": 200,
+    "nPrice": 300,
+    "id": "7780de02-97c4-482b-a874-6c2c725247aa",
+    "createdAt": "Thu Mar 20 2025 18:46:04 GMT+0530 (India Standard Time)",
+    "updatedAt": "Thu Mar 20 2025 18:46:04 GMT+0530 (India Standard Time)"
   }
 ]

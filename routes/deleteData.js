@@ -1,6 +1,6 @@
 const fs = require("fs");
 const url = require("url");
-const logger = require("../eventLogger");
+const logger = require("../EventHandler/eventLogger");
 
 const deleteData = (req, res) => {
   const id = req.url.split("/")[3];

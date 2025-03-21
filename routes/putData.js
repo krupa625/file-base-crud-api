@@ -1,5 +1,6 @@
 const fs = require("fs");
 const url = require("url");
+const logger = require("../EventHandler/eventLogger");
 
 const putData = (req, res) => {
   const id = req.url.split("/")[3];
@@ -65,12 +66,12 @@ const putData = (req, res) => {
         }
 
         let oUpdatedItem = {
-          ...aJsonData[aItemIndex],
-          ...JSON.parse(body),
+          ...aJsonData[aItemIndex], //spread existing data of json
+          ...JSON.parse(body), //spread new data
           updatedAt: new Date(),
         };
-        aJsonData[aItemIndex] = oUpdatedItem;
-        console.log(oUpdatedItem);
+        aJsonData[aItemIndex] = oUpdatedItem; //update array
+        // console.log(oUpdatedItem);
 
         //copies of all jsondata with index and add into updated form
 
