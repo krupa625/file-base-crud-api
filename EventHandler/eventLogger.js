@@ -1,7 +1,7 @@
 const EventEmitter = require("events");
 const fs = require("fs");
 const path = require("path");
-
+//this is custom eventemitter for events for different apis
 class Logger extends EventEmitter {
   log(message) {
     const logMessage = `${new Date().toString()} - ${message}\r\n`; //log msg added into log.txt file
