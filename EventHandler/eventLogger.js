@@ -6,7 +6,7 @@ class Logger extends EventEmitter {
   log(message) {
     const logMessage = `${new Date().toString()} - ${message}\r\n`; //log msg added into log.txt file
     // console.log(logMessage);
-    process.stdout.write(logMessage);
+    process.stdout.write(logMessage); //instant logging msg into console
     try {
       fs.appendFileSync(path.join(__dirname, "log.txt"), logMessage); //create log.txt file
     } catch (err) {
