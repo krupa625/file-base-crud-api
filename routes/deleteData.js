@@ -36,7 +36,7 @@ const deleteData = (req, res) => {
         res.writeHead(200, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ message: "Data deleted successfully" }));
       });
-      logger.log(`Item Deleted: ${JSON.stringify(aJsonData)}`);
+      logger.log(`Item Deleted: ${JSON.stringify(aJsonData)}`); //log the data into log.txt file
     });
   } catch (err) {
     res.end(err, { message: "Something went wrong!" });
