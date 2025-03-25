@@ -33,6 +33,10 @@ class UserController {
       } else {
         sendResponse(res, 404, "Item not found");
       }
+      Logger.on("get", () => {
+        console.log("getting data", oItem);
+      });
+      Logger.emit("get");
     });
   }
 
@@ -44,7 +48,7 @@ class UserController {
       sendResponse(res, 200, "Data fetched successfully", data);
       // console.log(data);
 
-      Logger.on("getdata", (data) => {
+      Logger.on("getdata", () => {
         console.log("Getting data:", data);
       });
       Logger.emit("getdata");
@@ -57,16 +61,21 @@ class UserController {
     readFileData("./data.json", (err, data) => {
       if (err) return sendResponse(res, 500, "Error reading data");
 
-      const filteredData = data.filter((item) => item.id !== iId);
+      const aFilteredData = data.filter((item) => item.id !== iId);
 
-      if (filteredData.length === data.length) {
+      if (aFilteredData.length === data.length) {
         return sendResponse(res, 404, "Item not found");
       }
+      Logger.log(`Item Deleted: ${JSON.stringify(aFilteredData)}`);
 
-      writeFileData("./data.json", filteredData, (writeErr) => {
+      writeFileData("./data.json", aFilteredData, (writeErr) => {
         if (writeErr) return sendResponse(res, 500, "Error deleting data");
         sendResponse(res, 200, "Data deleted successfully");
       });
+      Logger.on("deletedata", () => {
+        console.log("Deleting data");
+      });
+      Logger.emit("deletedata");
     });
   }
 
@@ -74,20 +83,25 @@ class UserController {
     let body = "";
     req.on("data", (chunk) => (body += chunk));
     req.on("end", () => {
-      let newItem = JSON.parse(body);
-      newItem.iId = uuidv4();
-      newItem.dCreatedAt = new Date().toLocaleString();
-      newItem.dUpdatedAt = newItem.dCreatedAt;
+      let oNewItem = JSON.parse(body);
+      oNewItem.iId = uuidv4();
+      oNewItem.dCreatedAt = new Date().toLocaleString();
+      oNewItem.dUpdatedAt = oNewItem.dCreatedAt;
 
       readFileData("./data.json", (err, data) => {
         if (err) return sendResponse(res, 500, "Error reading data");
 
-        data.push(newItem);
+        data.push(oNewItem);
+        Logger.log(`Item Created: ${JSON.stringify(oNewItem)}`);
 
         writeFileData("./data.json", data, (writeErr) => {
           if (writeErr) return sendResponse(res, 500, "Error saving data");
-          sendResponse(res, 201, "Item created successfully", newItem);
+          sendResponse(res, 201, "Item created successfully", oNewItem);
         });
+        Logger.on("postdata", () => {
+          console.log("created data:", oNewItem);
+        });
+        Logger.emit("postdata");
       });
     });
   }
@@ -98,24 +112,29 @@ class UserController {
 
     req.on("data", (chunk) => (body += chunk));
     req.on("end", () => {
-      let updatedItem = JSON.parse(body);
-      updatedItem.updatedAt = new Date().toLocaleString();
+      let oUpdatedItem = JSON.parse(body);
+      oUpdatedItem.updatedAt = new Date().toLocaleString();
 
       readFileData("./data.json", (err, data) => {
         if (err) return sendResponse(res, 500, "Error reading data");
 
-        const itemIndex = data.findIndex((item) => item.id === iId);
+        const aItemIndex = data.findIndex((item) => item.id === iId);
 
-        if (itemIndex === -1) {
+        if (aItemIndex === -1) {
           return sendResponse(res, 404, "Item not found");
         }
 
-        data[itemIndex] = { ...data[itemIndex], ...updatedItem };
+        data[aItemIndex] = { ...data[aItemIndex], ...oUpdatedItem };
+        Logger.log(`Item Updated: ${JSON.stringify(oUpdatedItem)}`);
 
         writeFileData("./data.json", data, (writeErr) => {
           if (writeErr) return sendResponse(res, 500, "Error updating data");
-          sendResponse(res, 200, "Data updated successfully", data[itemIndex]);
+          sendResponse(res, 200, "Data updated successfully", data[aItemIndex]);
         });
+        Logger.on("updatedata", () => {
+          console.log("updating data:", data[aItemIndex]);
+        });
+        Logger.emit("updatedata");
       });
     });
   }
