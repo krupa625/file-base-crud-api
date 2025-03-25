@@ -1,10 +1,14 @@
 const fs = require("fs");
 const path = require("path");
-const getData = require("../Controllers/getData");
-const postData = require("../Controllers/postData");
-const putData = require("../Controllers/putData");
-const deleteData = require("../Controllers/deleteData");
-const getDataId = require("../Controllers/getDataId");
+
+const {
+  deleteData,
+  getData,
+  getDataId,
+  postData,
+  putData,
+} = require("../Controllers/iteam.controller");
+const { sendResponse, readFileData, validateData } = require("./helper1");
 
 const route = (req, res) => {
   console.log("URL:", req.url);
@@ -14,7 +18,14 @@ const route = (req, res) => {
     //serving static file here
 
     const filePath = path.join(__dirname, "../public/index.html");
-    // console.log(filePath);
+    console.log(filePath);
+    // readFileData(filePath, (err, data) => {
+    //   if (err) {
+    //     return sendResponse(res, 404, "Not Found");
+    //   } else {
+    //     return sendResponse(res, 200, "content-type: text/html", data);
+    //   }
+    // });
 
     try {
       fs.readFile(filePath, (err, data) => {
