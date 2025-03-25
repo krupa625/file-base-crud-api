@@ -28,10 +28,24 @@ const deleteData = (req, res) => {
   });
 };
 function getData(req, res) {
+  // const { page = 1, limit = 5 } = req.query;
   readFileData("./data.json", (err, data) => {
     if (err) {
       return sendResponse(res, 500, "Internal Server Error");
     }
+    // const currentPage = parseInt(page);
+    // const itemsPerPage = parseInt(limit);
+    // const startIndex = (currentPage - 1) * itemsPerPage;
+    // const endIndex = currentPage * itemsPerPage;
+    // const paginatedData = data.slice(startIndex, endIndex);
+    // const response = {
+    //   totalItems: data.length,
+    //   totalPages: Math.ceil(data.length / itemsPerPage),
+    //   currentPage,
+    //   itemsPerPage,
+    //   data: paginatedData,
+    // };
+
     sendResponse(res, 200, "Data fetched successfully", data);
     // console.log(data);
 
