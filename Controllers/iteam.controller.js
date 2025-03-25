@@ -6,6 +6,7 @@ const {
 } = require("../routes/helper1");
 const { v4: uuidv4 } = require("uuid");
 const url = require("url");
+const Logger = require("../EventHandler/eventLogger");
 
 const deleteData = (req, res) => {
   const iId = req.url.split("/")[3];
@@ -13,13 +14,14 @@ const deleteData = (req, res) => {
   readFileData("./data.json", (err, data) => {
     if (err) return sendResponse(res, 500, "Error reading data");
 
-    const filteredData = data.filter((item) => item.iId !== iId);
+    const aFilteredData = data.filter((item) => item.iId !== iId);
+    Logger.log(`Item Deleted: ${JSON.stringify(aFilteredData)}`);
 
-    if (filteredData.length === data.length) {
+    if (aFilteredData.length === data.length) {
       return sendResponse(res, 404, "Item not found");
     }
 
-    writeFileData("./data.json", filteredData, (writeErr) => {
+    writeFileData("./data.json", aFilteredData, (writeErr) => {
       if (writeErr) return sendResponse(res, 500, "Error deleting data");
       sendResponse(res, 200, "Data deleted successfully");
     });
@@ -33,7 +35,7 @@ function getData(req, res) {
     sendResponse(res, 200, "Data fetched successfully", data);
     // console.log(data);
 
-    Logger.on("getdata", (data) => {
+    Logger.on("getdata", () => {
       console.log("Getting data:", data);
     });
     Logger.emit("getdata");
@@ -80,11 +82,16 @@ const postData = (req, res) => {
       if (err) return sendResponse(res, 500, "Error reading data");
 
       data.push(oNewItem);
+      Logger.log(`Item Created: ${JSON.stringify(oNewItem)}`);
 
       writeFileData("./data.json", data, (writeErr) => {
         if (writeErr) return sendResponse(res, 500, "Error saving data");
         sendResponse(res, 201, "Item created successfully", oNewItem);
       });
+      Logger.on("postdata", () => {
+        console.log("created data:", oNewItem);
+      });
+      Logger.emit("postdata");
     });
   });
 };
@@ -100,25 +107,30 @@ const putData = (req, res) => {
     if (error) {
       return sendResponse(res, 400, "message: error");
     }
-    let updatedItem = JSON.parse(body);
+    let oUpdatedItem = JSON.parse(body);
 
-    updatedItem.dUpdatedAt = new Date().toLocaleString();
+    oUpdatedItem.dUpdatedAt = new Date().toLocaleString();
 
     readFileData("./data.json", (err, data) => {
       if (err) return sendResponse(res, 500, "Error reading data");
 
-      const itemIndex = data.findIndex((item) => item.iId === iId);
+      const aItemIndex = data.findIndex((item) => item.iId === iId);
 
-      if (itemIndex === -1) {
+      if (aItemIndex === -1) {
         return sendResponse(res, 404, "Item not found");
       }
+      Logger.log(`Item Deleted: ${JSON.stringify(oUpdatedItem)}`);
 
-      data[itemIndex] = { ...data[itemIndex], ...updatedItem };
+      data[aItemIndex] = { ...data[aItemIndex], ...oUpdatedItem };
 
       writeFileData("./data.json", data, (writeErr) => {
         if (writeErr) return sendResponse(res, 500, "Error updating data");
-        sendResponse(res, 200, "Data updated successfully", data[itemIndex]);
+        sendResponse(res, 200, "Data updated successfully", data[aItemIndex]);
       });
+      Logger.on("putdata", () => {
+        console.log("updated data:", oUpdatedItem);
+      });
+      Logger.emit("putdata");
     });
   });
 };
