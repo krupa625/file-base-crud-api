@@ -1,7 +1,7 @@
 const fs = require("fs");
 
-const readFileData = (filePath, callback) => {
-  fs.readFile(filePath, "utf8", (err, data) => {
+const readFileData = (sFilePath, callback) => {
+  fs.readFile(sFilePath, "utf8", (err, data) => {
     if (err) {
       callback(err, null);
     } else {
@@ -11,8 +11,29 @@ const readFileData = (filePath, callback) => {
   });
 };
 
-const writeFileData = (filePath, data, callback) => {
-  fs.writeFile(filePath, JSON.stringify(data), (err) => {
+// const readFileData = (sFilePath) => {
+//   return new Promise((resolve, reject) => {
+//     fs.readFile(sFilePath, "utf8", (err, data) => {
+//       if (err) {
+//         reject(err); // Promise rejected with error
+//       } else {
+//         try {
+//           resolve(JSON.parse(data)); // Promise resolved with parsed data
+//         } catch (parseError) {
+//           reject(parseError); // Error in JSON parsing
+//         }
+//       }
+//     });
+//   });
+// };
+
+// // Usage example
+// readFileData("data.json")
+//   .then((data) => console.log("Data:", data))
+//   .catch((error) => console.error("Error:", error));
+
+const writeFileData = (sFilePath, data, callback) => {
+  fs.writeFile(sFilePath, JSON.stringify(data), (err) => {
     callback(err);
   });
 };
