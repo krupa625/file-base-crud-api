@@ -32,7 +32,7 @@ const route = (req, res) => {
       });
       break;
 
-    case method === "GET" && url === "/api/data":
+    case method === "GET" && url.startsWith("/api/data"):
       getData(req, res);
       break;
 

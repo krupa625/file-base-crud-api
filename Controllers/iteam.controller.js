@@ -27,21 +27,46 @@ const deleteData = (req, res) => {
     });
   });
 };
+// function getData(req, res) {
+//   readFileData("./data.json", (err, data) => {
+//     if (err) {
+//       return sendResponse(res, 500, "Internal Server Error");
+//     }
+
+//     sendResponse(res, 200, "Data fetched successfully", data);
+//     // console.log(data);
+
+//     Logger.on("getdata", () => {
+//       console.log("Getting data:", data);
+//     });
+//     Logger.emit("getdata");
+//   });
+// }
+
 function getData(req, res) {
   readFileData("./data.json", (err, data) => {
     if (err) {
       return sendResponse(res, 500, "Internal Server Error");
     }
 
-    sendResponse(res, 200, "Data fetched successfully", data);
-    // console.log(data);
+    const query = new URL(req.url, `http://${req.headers.host}`).searchParams;
 
-    Logger.on("getdata", () => {
-      console.log("Getting data:", data);
+    const page = parseInt(query.get("page")) || 1;
+    const limit = parseInt(query.get("limit")) || 3;
+    const startIndex = (page - 1) * limit;
+    const endIndex = startIndex + limit;
+    const paginatedData = data.slice(startIndex, endIndex);
+
+    sendResponse(res, 200, "Data fetched successfully", {
+      page,
+      limit,
+      totalRecords: data.length,
+      totalPages: Math.ceil(data.length / limit),
+      data: paginatedData,
     });
-    Logger.emit("getdata");
   });
 }
+
 function getDataId(req, res) {
   const iId = req.url.split("/")[3];
 
