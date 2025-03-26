@@ -32,7 +32,7 @@ const route = (req, res) => {
       });
       break;
 
-    case method === "GET" && url.startsWith("/api/data"):
+    case method === "GET" && url === "/api/data":
       getData(req, res);
       break;
 
@@ -106,12 +106,6 @@ module.exports = route;
 //     } catch (err) {
 //       res.end(err, { message: "Something went wrong!" });
 //     }
-//     // } else if (req.method === "GET" && req.url === "/api/data") {
-
-//     //   const urlParts = req.url.split("?");
-//     //   if (urlParts.length > 1 && urlParts[0] === "/api/data") {
-//     //     getData(req, res); // For pagination
-//     //   }
 //   } else if (req.method === "GET" && req.url === "/api/data") {
 //     getData(req, res);
 //   } else if (req.method === "GET" && req.url.startsWith("/api/data/")) {
